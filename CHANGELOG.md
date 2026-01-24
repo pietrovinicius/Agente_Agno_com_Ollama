@@ -39,3 +39,5 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Configuração de Ambiente**: Criação de diretório `ollama_home` para armazenar modelos e dados localmente, contornando restrições de permissão do sistema.
 - **Scripts**: Adicionado `start_ollama.sh` para inicialização automática do servidor Ollama com as variáveis de ambiente corretas.
 - **Qualidade de Código**: Correções de formatação PEP-8 (imports, espaçamento, linhas em branco) em `agents.py`, `views.py` e `settings.py`.
+- **Frontend Build**: Correção de compatibilidade entre Tailwind CSS v4 e PostCSS substituindo o plugin `tailwindcss` por `@tailwindcss/postcss` no arquivo `postcss.config.js`.
+- **Agentes**: Correção de `TypeError` na inicialização do `Agent` em `agents.py`, substituindo o parâmetro `response_model` por `output_schema` conforme a API atual do Agno.

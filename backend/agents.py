@@ -27,6 +27,6 @@ def get_medical_agent():
             "Extraia os principais sintomas em uma lista clara.",
             "Não invente informações que não estejam no texto, apenas interprete e formalize."
         ],
-        response_model=AnamneseSchema,
+        output_schema=AnamneseSchema,
         structured_outputs=True,  # Garante retorno estruturado
     )
