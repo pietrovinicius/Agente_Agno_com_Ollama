@@ -1,0 +1,61 @@
+# Comandos de Inicialização e Configuração do Projeto
+
+## 1. Pré-requisitos
+- Python 3.12+
+- Node.js & npm
+- Ollama (instalado e rodando)
+
+## 2. Configuração do Modelo de IA (Ollama)
+# Certifique-se de que o Ollama está rodando
+ollama serve
+
+# Em outro terminal, baixe o modelo Llama 3.1
+ollama pull llama3.1
+
+## 3. Configuração do Backend (Django + Agno)
+# Navegue até a raiz do projeto
+cd "/Volumes/SSD 1tb/Projetos/Agente_Agno_com_Ollama"
+
+# Crie o ambiente virtual (se não existir)
+python3.12 -m venv venv
+
+# Ative o ambiente virtual
+# No macOS/Linux:
+source venv/bin/activate
+# No Windows:
+# venv\Scripts\activate
+
+# Instale as dependências
+pip install -r requirements.txt
+
+# Navegue para a pasta do backend
+cd backend
+
+# Aplique as migrações do banco de dados
+python manage.py migrate
+
+# (Opcional) Execute os testes para garantir que tudo está ok
+pytest
+
+# Inicie o servidor de desenvolvimento
+python manage.py runserver
+
+## 4. Configuração do Frontend (React + Vite)
+# Abra um novo terminal na raiz do projeto
+cd "/Volumes/SSD 1tb/Projetos/Agente_Agno_com_Ollama"
+
+# Navegue para a pasta do frontend
+cd frontend
+
+# Instale as dependências do Node.js
+npm install
+
+# Inicie o servidor de desenvolvimento do frontend
+npm run dev
+
+## 5. Acessando a Aplicação
+# O Frontend estará disponível tipicamente em:
+http://localhost:5173
+
+# O Backend estará rodando em:
+http://localhost:8000
