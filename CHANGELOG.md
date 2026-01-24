@@ -77,11 +77,15 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Refinamento de Prompt**: Ajuste nas instruções do Agente para solicitar códigos CID-10 mais concisos.
 - **Otimização de Inferência**: Ajuste fino dos parâmetros do Ollama (`temperature=0`, `num_ctx=2048`, `top_k=20`) para reduzir o tempo de resposta (target: sub-15s).
 
-### Documentação e Base de Conhecimento (0.1.7)
-- **Knowledge Base**: Criação do arquivo `FAQ.MD` contendo:
+### Integração de IA e Base de Conhecimento (0.1.7)
+- **Context Injection**: Integração completa do arquivo `FAQ.MD` (Protocolos Clínicos) diretamente nas instruções do sistema do Agente Agno.
+    - Implementação de leitura eficiente (Singleton) do arquivo de conhecimento.
+    - Injeção dinâmica de contexto para garantir conformidade com protocolos institucionais sem latência de RAG vetorial.
+- **Otimização de Contexto**: Aumento da janela de contexto (`num_ctx`) do Ollama de 2048 para 4096 tokens para acomodar a base de conhecimento completa + anamneses extensas.
+- **Limpeza de Dependências**: Remoção da biblioteca `lancedb` do `requirements.txt`, otimizando o build e reduzindo a complexidade do projeto.
+- **Knowledge Base**: Criação e estruturação do arquivo `FAQ.MD` contendo:
     - Protocolos Clínicos Críticos (Sepse, Dor Torácica, AVC).
     - Diretrizes de Uso da IA e Persistência de Dados.
     - Segurança e Privacidade (LGPD).
     - Rotinas de Emergência.
-- **Objetivo**: Padronização de respostas para médicos e preparação para futura ingestão pelo Agente Agno.
 
