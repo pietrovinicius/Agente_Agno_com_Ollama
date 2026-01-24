@@ -66,3 +66,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Backend - API**: Novo endpoint `POST /api/salvar-anamnese/` e rota raiz `/` informativa com status da API.
 - **Backend - Admin**: Configuração do Django Admin para visualização, filtro e busca de anamneses processadas.
 - **Frontend - Integração**: Conexão do botão "Aprovar Sugestão" com a API de persistência, garantindo que os dados aprovados sejam gravados no banco.
+
+### Performance e Otimização (0.1.5)
+- **Upgrade de Modelo**: Substituição do modelo `llama3.1` (8B) pelo `llama3.2` (3B) no Agente Clínico.
+- **Ganho de Desempenho**: Redução drástica no consumo de memória RAM e tempo de inferência, permitindo execução fluida em dispositivos como MacBook Air (8GB).

@@ -15,9 +15,9 @@ def get_medical_agent():
     """
     Retorna uma instância configurada do Agente Agno.
     """
-    # Usando Ollama localmente (localhost:11434 por padrão no Agno)
+    # Usando Ollama localmente (localhost:11434 por padrão no Agno)def get_medical_agent():
     return Agent(
-        model=Ollama(id="llama3.1"),
+        model=Ollama(id="llama3.2"),
         description="Você é um Assistente Clínico Sênior experiente e meticuloso.",
         instructions=[
             "Analise o texto bruto da anamnese fornecido.",
