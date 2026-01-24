@@ -59,6 +59,7 @@ def get_medical_agent():
                 "num_predict": 512,  # Limita tokens de saída para evitar respostas longas
                 "top_k": 20,         # Reduz espaço de busca
                 "top_p": 0.9,
+                "keep_alive": -1,    # Mantém o modelo carregado na memória indefinidamente (evita Cold Start de 50s+)
             }
         ),
         description="Você é um Assistente Clínico Sênior experiente e meticuloso.",

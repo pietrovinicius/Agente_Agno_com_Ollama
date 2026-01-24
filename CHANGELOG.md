@@ -99,3 +99,9 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
     - O tempo exibido na interface agora é enviado ao backend ao aprovar a sugestão.
 - **Testes**: Adição de testes unitários (`tests/test_performance_tracking.py`) para validar a persistência da métrica de performance.
 
+### Otimização de Latência (0.1.9)
+- **Correção de Cold Start**: Identificado que a lentidão relatada (~1m) era causada pelo descarregamento automático do modelo da memória pelo Ollama após inatividade.
+    - **Ação**: Configurado parâmetro `"keep_alive": -1` nas opções do Agente.
+    - **Resultado**: O modelo agora permanece carregado na RAM indefinidamente, garantindo tempos de resposta consistentes (~14s) mesmo após pausas longas.
+- **Diagnóstico de Performance**: Criação de script `debug_latency.py` que comprovou que o arquivo `FAQ.MD` (Context Injection) **não** impacta o tempo de inferência (diferença desprezível de <0.01s).
+
