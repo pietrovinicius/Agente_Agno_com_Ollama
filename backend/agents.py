@@ -7,7 +7,7 @@ from typing import List
 # Schema Pydantic conforme solicitado
 class AnamneseSchema(BaseModel):
     texto_melhorado: str = Field(..., description="O texto da anamnese corrigido com terminologia médica técnica.")
-    cid_sugerido: str = Field(..., description="Código CID-10 sugerido para o diagnóstico principal (ex: J00).")
+    cid_sugerido: str = Field(..., description="Apenas o código CID-10 (ex: J00, R51) ou código + nome curto (max 50 chars).")
     principais_sintomas: List[str] = Field(..., description="Lista dos principais sintomas identificados no texto.")
 
 
