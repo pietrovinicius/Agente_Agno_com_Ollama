@@ -70,3 +70,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 ### Performance e Otimização (0.1.5)
 - **Upgrade de Modelo**: Substituição do modelo `llama3.1` (8B) pelo `llama3.2` (3B) no Agente Clínico.
 - **Ganho de Desempenho**: Redução drástica no consumo de memória RAM e tempo de inferência, permitindo execução fluida em dispositivos como MacBook Air (8GB).
+
+### Performance e Otimização (0.1.5)
+- **Upgrade de Modelo**: Substituição do modelo `llama3.1` (8B) pelo `llama3.2` (3B) no Agente Clínico.
+- **Ganho de Desempenho**: Redução drástica no consumo de memória RAM e tempo de inferência, permitindo execução fluida em dispositivos como MacBook Air (8GB).
