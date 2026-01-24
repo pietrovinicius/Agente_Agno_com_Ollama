@@ -8,3 +8,4 @@ pytest-django
 openai
 ollama
 adrf
+requests

@@ -41,3 +41,13 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Qualidade de Código**: Correções de formatação PEP-8 (imports, espaçamento, linhas em branco) em `agents.py`, `views.py` e `settings.py`.
 - **Frontend Build**: Correção de compatibilidade entre Tailwind CSS v4 e PostCSS substituindo o plugin `tailwindcss` por `@tailwindcss/postcss` no arquivo `postcss.config.js`.
 - **Agentes**: Correção de `TypeError` na inicialização do `Agent` em `agents.py`, substituindo o parâmetro `response_model` por `output_schema` conforme a API atual do Agno.
+
+### Melhorias de Design e UX (0.1.1)
+- **Design System Clínico**: Alteração da paleta de cores para `Teal/Slate` (verde-azulado e cinza ardósia) para transmitir maior profissionalismo médico e reduzir fadiga visual.
+- **Feedback Visual**: Implementação de sistema de **Toast Notifications** para confirmações e feedback de ações, substituindo alertas nativos do navegador.
+- **Skeleton Screens**: Adição de "Skeleton Loaders" (telas de esqueleto) durante o processamento da IA para melhorar a percepção de performance.
+- **Produtividade**: Novos botões de "Copiar para área de transferência" nos cartões de CID-10 e Texto Melhorado.
+
+### Infraestrutura e Testes (0.1.2)
+- **Validação**: Adição de script `validate_integration.py` para testes de integração automatizados.
+- **Dependências**: Atualização do `requirements.txt` com `requests` para suporte aos scripts de teste.
