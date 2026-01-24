@@ -78,22 +78,36 @@ function App() {
 
   const handleAprovar = async () => {
     try {
+      if (!resultado) return
+
       const payload = {
         texto_original: texto,
         texto_melhorado: resultado.texto_melhorado,
         cid_sugerido: resultado.cid_sugerido,
-        principais_sintomas: resultado.principais_sintomas
+        principais_sintomas: resultado.principais_sintomas || []
       }
       
+      console.log('Enviando para salvar:', payload)
+
       await axios.post('http://localhost:8000/api/salvar-anamnese/', payload)
-      showToast('Anamnese aprovada e salva no banco de dados!')
+      
+      // Feedback de sucesso
+      const msg = 'Sucesso! Anamnese aprovada e salva no banco de dados.'
+      alert(msg)
+      showToast(msg)
       
       // Limpar estado após salvar
       setTexto('')
       setResultado(null)
       setTempoProcessamento(null)
+      setCronometroAoVivo(0)
     } catch (err) {
-      console.error(err)
+      console.error('Erro detalhado:', err)
+      const errorMsg = err.response?.data 
+        ? `Erro ao salvar: ${JSON.stringify(err.response.data)}`
+        : 'Erro de conexão ao salvar anamnese. Verifique o backend.'
+      
+      alert(errorMsg)
       showToast('Erro ao salvar anamnese.', 'error')
     }
   }
