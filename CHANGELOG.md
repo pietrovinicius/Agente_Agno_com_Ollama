@@ -43,11 +43,17 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Agentes**: Correção de `TypeError` na inicialização do `Agent` em `agents.py`, substituindo o parâmetro `response_model` por `output_schema` conforme a API atual do Agno.
 
 ### Melhorias de Design e UX (0.1.1)
-- **Design System Clínico**: Alteração da paleta de cores para `Teal/Slate` (verde-azulado e cinza ardósia) para transmitir maior profissionalismo médico e reduzir fadiga visual.
-- **Feedback Visual**: Implementação de sistema de **Toast Notifications** para confirmações e feedback de ações, substituindo alertas nativos do navegador.
-- **Skeleton Screens**: Adição de "Skeleton Loaders" (telas de esqueleto) durante o processamento da IA para melhorar a percepção de performance.
-- **Produtividade**: Novos botões de "Copiar para área de transferência" nos cartões de CID-10 e Texto Melhorado.
+- **Novo Layout de Dashboard**: Reestruturação completa da interface para um layout de Dashboard Médico com Sidebar lateral e divisão em duas colunas (Registro Clínico vs Insights IA).
+- **Design System Atualizado**: Adoção de paleta profissional `Sky/Slate` (Azul Céu e Cinza) sobre fundo `Gray-50` para maior conforto visual e modernidade.
+- **Componentes Avançados**:
+    - **Input Interativo**: Campo de texto com label flutuante e estados de foco aprimorados.
+    - **Cards de Insights**: Visualização de resultados com bordas laterais coloridas (`border-l-4`) para distinção rápida entre Diagnóstico e Conduta.
+    - **Micro-interações**: Feedback visual com ícones `Lucide-React`, animações de pulsação durante processamento e indicadores de status.
+- **Produtividade**: Ações rápidas de "Aprovar Sugestão" e "Editar Manualmente" com feedback via Toast Notifications.
 
-### Infraestrutura e Testes (0.1.2)
-- **Validação**: Adição de script `validate_integration.py` para testes de integração automatizados.
-- **Dependências**: Atualização do `requirements.txt` com `requests` para suporte aos scripts de teste.
+### Refinamento Visual "Medical Blue" (0.1.2)
+- **Paleta de Cores Premium**: Substituição do "Sky Blue" pelo "Royal Blue" (Azul Médico Profundo) para transmitir maior autoridade e confiança.
+- **Interface de Editor Rico**: O campo de anamnese agora simula um editor de texto profissional com barra de ferramentas (Negrito, Itálico, Listas).
+- **Botões "New Skeuomorphism"**: Adição de gradientes sutis, sombras coloridas e feedback tátil (clique/hover) nos botões de ação.
+- **Tipografia e Espaçamento**: Ajustes finos em pesos de fonte (font-semibold) e espaçamento (whitespace) para melhor legibilidade.
+- **Sidebar Destacada**: Adição de sombreamento profundo na barra lateral para melhor separação visual das camadas.
