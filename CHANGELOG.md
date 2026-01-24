@@ -98,6 +98,16 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Frontend**: Integração do cronômetro de processamento com o fluxo de salvamento.
     - O tempo exibido na interface agora é enviado ao backend ao aprovar a sugestão.
 - **Admin**: Adição da coluna "Tempo Processamento" na listagem de anamneses (`/admin`), com formatação amigável (ex: "12.50s") e ordenação.
+
+### Otimização de Latência e Estabilidade (0.1.9)
+- **Diagnóstico**: Identificação e correção de "Cold Start" severo do Ollama (latência de 60s+ na primeira chamada).
+- **Preload**: Implementação de script `preload_model.py` e atualização do `start_ollama.sh` para carregar o modelo na memória durante o boot do servidor.
+- **Configuração do Agente**:
+    - Definição explícita de `keep_alive=-1` para impedir que o modelo seja descarregado da memória após inatividade.
+    - Redução de `num_ctx` para 1024 tokens e `num_predict` para 512, otimizando o throughput sem perda de qualidade para a tarefa.
+    - Reversão estratégica para o modelo `llama3.2` (3B) após testes mostrarem que a versão 1B apresentava alucinações críticas (falha na geração de JSON/CID).
+- **Resultado**: Redução do tempo de resposta "Warm" para ~10-15s (anteriormente >1m em alguns casos).
+
 - **Testes**: Adição de testes unitários (`tests/test_performance_tracking.py`) para validar a persistência da métrica de performance.
 
 ### Otimização de Latência (0.1.9)

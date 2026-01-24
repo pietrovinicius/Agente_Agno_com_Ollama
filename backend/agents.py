@@ -36,13 +36,12 @@ def get_medical_agent():
     Retorna uma instância configurada do Agente Agno.
     """
     instructions = [
-        "Analise o texto bruto da anamnese fornecido.",
-        "Reescreva o texto utilizando terminologia médica técnica padrão, "
-        "mantendo o sentido original mas com maior formalidade e precisão.",
-        "Identifique o código CID-10 mais apropriado para o caso descrito.",
-        "Extraia os principais sintomas em uma lista clara.",
-        "Não invente informações que não estejam no texto, apenas interprete e formalize.",
-        "Sempre priorize as informações contidas na BASE DE CONHECIMENTO (FAQ.MD) abaixo para responder sobre protocolos hospitalares e fluxos de sistema."
+        "ATENÇÃO: Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
+        "Analise a anamnese e extraia os dados técnicos.",
+        "CAMPO 'cid_sugerido': Retorne APENAS o código (ex: A09, J11). NÃO explique.",
+        "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais.",
+        "CAMPO 'principais_sintomas': Liste apenas os sintomas chave.",
+        "Use o FAQ.MD apenas para consulta de protocolos, não inclua o protocolo na resposta."
     ]
 
     # Injeta a Base de Conhecimento diretamente nas instruções (Context Injection)
@@ -52,14 +51,14 @@ def get_medical_agent():
     # Usando Ollama localmente (localhost:11434 por padrão no Agno)
     return Agent(
         model=Ollama(
-            id="llama3.2",
+            id="llama3.2",  # Retornando ao 3B pois o 1B alucina na estruturação do JSON
             options={
                 "temperature": 0.0,  # Mais determinístico e rápido
-                "num_ctx": 2048,     # Retornado para 2048 para evitar latência de alocação (FAQ tem apenas ~4KB)
+                "num_ctx": 1024,     # Reduzido para 1024 para otimizar uso de memória e velocidade
                 "num_predict": 512,  # Limita tokens de saída para evitar respostas longas
                 "top_k": 20,         # Reduz espaço de busca
                 "top_p": 0.9,
-                "keep_alive": -1,    # Mantém o modelo carregado na memória indefinidamente (evita Cold Start de 50s+)
+                "keep_alive": -1,    # Mantém o modelo carregado na memória indefinidamente (evita Cold Start)
             }
         ),
         description="Você é um Assistente Clínico Sênior experiente e meticuloso.",

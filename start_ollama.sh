@@ -21,5 +21,21 @@ if [ ! -f "$OLLAMA_BIN" ]; then
     exit 1
 fi
 
-# Inicia o servidor
-"$OLLAMA_BIN" serve
+# Inicia o servidor em background
+"$OLLAMA_BIN" serve &
+
+# Aguarda o servidor subir
+echo "Aguardando Ollama iniciar..."
+sleep 5
+
+# Executa o preload do modelo
+if command -v python3 &> /dev/null; then
+    python3 "$PROJECT_DIR/preload_model.py"
+elif command -v python &> /dev/null; then
+    python "$PROJECT_DIR/preload_model.py"
+else
+    echo "Aviso: Python não encontrado, pulando preload."
+fi
+
+# Mantém o script rodando
+wait
