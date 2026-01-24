@@ -77,6 +77,11 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Refinamento de Prompt**: Ajuste nas instruções do Agente para solicitar códigos CID-10 mais concisos.
 - **Otimização de Inferência**: Ajuste fino dos parâmetros do Ollama (`temperature=0`, `num_ctx=2048`, `top_k=20`) para reduzir o tempo de resposta (target: sub-15s).
 
-### Performance e Otimização (0.1.5)
-- **Upgrade de Modelo**: Substituição do modelo `llama3.1` (8B) pelo `llama3.2` (3B) no Agente Clínico.
-- **Ganho de Desempenho**: Redução drástica no consumo de memória RAM e tempo de inferência, permitindo execução fluida em dispositivos como MacBook Air (8GB).
+### Documentação e Base de Conhecimento (0.1.7)
+- **Knowledge Base**: Criação do arquivo `FAQ.MD` contendo:
+    - Protocolos Clínicos Críticos (Sepse, Dor Torácica, AVC).
+    - Diretrizes de Uso da IA e Persistência de Dados.
+    - Segurança e Privacidade (LGPD).
+    - Rotinas de Emergência.
+- **Objetivo**: Padronização de respostas para médicos e preparação para futura ingestão pelo Agente Agno.
+
