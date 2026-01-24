@@ -91,3 +91,11 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
     - Segurança e Privacidade (LGPD).
     - Rotinas de Emergência.
 
+### Monitoramento de Performance (0.1.8)
+- **Backend**: Adição do campo `tempo_processamento` ao modelo `Anamnese` para registrar a duração da inferência da IA.
+    - Atualização do `AnamneseSerializer` para validar e expor o novo campo.
+    - Migração de banco de dados criada (`0003_anamnese_tempo_processamento.py`).
+- **Frontend**: Integração do cronômetro de processamento com o fluxo de salvamento.
+    - O tempo exibido na interface agora é enviado ao backend ao aprovar a sugestão.
+- **Testes**: Adição de testes unitários (`tests/test_performance_tracking.py`) para validar a persistência da métrica de performance.
+

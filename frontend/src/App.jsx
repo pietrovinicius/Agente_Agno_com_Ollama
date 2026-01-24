@@ -84,7 +84,8 @@ function App() {
         texto_original: texto,
         texto_melhorado: resultado.texto_melhorado,
         cid_sugerido: resultado.cid_sugerido,
-        principais_sintomas: resultado.principais_sintomas || []
+        principais_sintomas: resultado.principais_sintomas || [],
+        tempo_processamento: parseFloat(tempoProcessamento) || 0.0
       }
       
       console.log('Enviando para salvar:', payload)
