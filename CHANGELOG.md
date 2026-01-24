@@ -97,6 +97,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
     - Migração de banco de dados criada (`0003_anamnese_tempo_processamento.py`).
 - **Frontend**: Integração do cronômetro de processamento com o fluxo de salvamento.
     - O tempo exibido na interface agora é enviado ao backend ao aprovar a sugestão.
+- **Admin**: Adição da coluna "Tempo Processamento" na listagem de anamneses (`/admin`), com formatação amigável (ex: "12.50s") e ordenação.
 - **Testes**: Adição de testes unitários (`tests/test_performance_tracking.py`) para validar a persistência da métrica de performance.
 
 ### Otimização de Latência (0.1.9)
