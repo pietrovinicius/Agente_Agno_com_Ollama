@@ -55,7 +55,7 @@ def get_medical_agent():
             id="llama3.2",
             options={
                 "temperature": 0.0,  # Mais determinístico e rápido
-                "num_ctx": 4096,     # Aumentado para acomodar o FAQ + Anamnese
+                "num_ctx": 2048,     # Retornado para 2048 para evitar latência de alocação (FAQ tem apenas ~4KB)
                 "num_predict": 512,  # Limita tokens de saída para evitar respostas longas
                 "top_k": 20,         # Reduz espaço de busca
                 "top_p": 0.9,

@@ -81,7 +81,9 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Context Injection**: Integração completa do arquivo `FAQ.MD` (Protocolos Clínicos) diretamente nas instruções do sistema do Agente Agno.
     - Implementação de leitura eficiente (Singleton) do arquivo de conhecimento.
     - Injeção dinâmica de contexto para garantir conformidade com protocolos institucionais sem latência de RAG vetorial.
-- **Otimização de Contexto**: Aumento da janela de contexto (`num_ctx`) do Ollama de 2048 para 4096 tokens para acomodar a base de conhecimento completa + anamneses extensas.
+- **Otimização de Contexto**: Ajuste da janela de contexto (`num_ctx`) do Ollama para 2048 tokens.
+    - *Correção*: O aumento anterior para 4096 causou degradação severa de performance (50s+ de carregamento) no hardware local.
+    - O valor de 2048 provou-se suficiente para FAQ + Anamnese com tempo de resposta sub-10s.
 - **Limpeza de Dependências**: Remoção da biblioteca `lancedb` do `requirements.txt`, otimizando o build e reduzindo a complexidade do projeto.
 - **Knowledge Base**: Criação e estruturação do arquivo `FAQ.MD` contendo:
     - Protocolos Clínicos Críticos (Sepse, Dor Torácica, AVC).
