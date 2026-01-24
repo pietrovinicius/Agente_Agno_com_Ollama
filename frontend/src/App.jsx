@@ -18,7 +18,8 @@ import {
   Bold,
   Italic,
   List,
-  AlignLeft
+  AlignLeft,
+  Clock
 } from 'lucide-react'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState('')
   const [toast, setToast] = useState(null)
+  const [tempoProcessamento, setTempoProcessamento] = useState(null)
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type })
@@ -43,9 +45,15 @@ function App() {
     setLoading(true)
     setErro('')
     setResultado(null)
+    setTempoProcessamento(null)
+    const inicio = Date.now()
+
     try {
       const response = await axios.post('http://localhost:8000/api/processar-anamnese/', { texto })
       setResultado(response.data)
+      const fim = Date.now()
+      const duracao = ((fim - inicio) / 1000).toFixed(2)
+      setTempoProcessamento(duracao)
     } catch (err) {
       console.error(err)
       setErro('Erro ao processar anamnese. Verifique se o backend está rodando e o Ollama está ativo.')
@@ -216,7 +224,17 @@ function App() {
                   <Brain className="w-5 h-5 text-indigo-600" />
                   Insights de Inteligência Artificial
                 </h3>
-                {resultado && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md font-medium border border-emerald-200">Análise Concluída</span>}
+                {resultado && (
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md font-medium border border-emerald-200">Análise Concluída</span>
+                    {tempoProcessamento && (
+                      <span className="text-[10px] text-slate-400 flex items-center gap-1 font-medium">
+                        <Clock className="w-3 h-3" />
+                        {tempoProcessamento}s
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="p-5 flex-1 flex flex-col relative">
