@@ -86,6 +86,19 @@ function App() {
     showToast('Modo de edição ativado (Simulação)')
   }
 
+  const formatTime = (seconds) => {
+    const numSeconds = parseFloat(seconds)
+    if (isNaN(numSeconds)) return '0s'
+    
+    if (numSeconds < 60) {
+      return `${numSeconds.toFixed(1)}s`
+    }
+    
+    const minutes = Math.floor(numSeconds / 60)
+    const remainingSeconds = Math.floor(numSeconds % 60)
+    return `${minutes}m ${remainingSeconds}s`
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex overflow-hidden">
       {toast && (
@@ -244,7 +257,7 @@ function App() {
                     {tempoProcessamento && (
                       <span className="text-[10px] text-slate-400 flex items-center gap-1 font-medium">
                         <Clock className="w-3 h-3" />
-                        {tempoProcessamento}s
+                        {formatTime(tempoProcessamento)}
                       </span>
                     )}
                   </div>
@@ -258,7 +271,7 @@ function App() {
                   <p className="text-blue-700 font-medium animate-pulse">Gerando insights clínicos...</p>
                   <p className="text-blue-500 text-sm mt-2 font-mono flex items-center gap-1">
                     <Clock className="w-3 h-3" />
-                    {cronometroAoVivo}s
+                    {formatTime(cronometroAoVivo)}
                   </p>
                 </div>
               )}
