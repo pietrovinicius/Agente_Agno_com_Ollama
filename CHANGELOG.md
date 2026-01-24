@@ -57,3 +57,12 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Botões "New Skeuomorphism"**: Adição de gradientes sutis, sombras coloridas e feedback tátil (clique/hover) nos botões de ação.
 - **Tipografia e Espaçamento**: Ajustes finos em pesos de fonte (font-semibold) e espaçamento (whitespace) para melhor legibilidade.
 - **Sidebar Destacada**: Adição de sombreamento profundo na barra lateral para melhor separação visual das camadas.
+
+### UX Aprimorada (0.1.3)
+- **Formatação de Tempo Inteligente**: O cronômetro de processamento agora exibe o tempo em minutos e segundos (ex: "4m 23s") para durações mais longas, melhorando a legibilidade.
+
+### Persistência e Integração (0.1.4)
+- **Backend - Persistência**: Criação do modelo `Anamnese` para salvar históricos no banco de dados SQLite.
+- **Backend - API**: Novo endpoint `POST /api/salvar-anamnese/` e rota raiz `/` informativa com status da API.
+- **Backend - Admin**: Configuração do Django Admin para visualização, filtro e busca de anamneses processadas.
+- **Frontend - Integração**: Conexão do botão "Aprovar Sugestão" com a API de persistência, garantindo que os dados aprovados sejam gravados no banco.

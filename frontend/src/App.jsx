@@ -76,9 +76,26 @@ function App() {
     }
   }
 
-  const handleAprovar = () => {
-    console.log("Anamnese aprovada e salva:", resultado)
-    showToast('Anamnese aprovada e integrada ao prontuário!')
+  const handleAprovar = async () => {
+    try {
+      const payload = {
+        texto_original: texto,
+        texto_melhorado: resultado.texto_melhorado,
+        cid_sugerido: resultado.cid_sugerido,
+        principais_sintomas: resultado.principais_sintomas
+      }
+      
+      await axios.post('http://localhost:8000/api/salvar-anamnese/', payload)
+      showToast('Anamnese aprovada e salva no banco de dados!')
+      
+      // Limpar estado após salvar
+      setTexto('')
+      setResultado(null)
+      setTempoProcessamento(null)
+    } catch (err) {
+      console.error(err)
+      showToast('Erro ao salvar anamnese.', 'error')
+    }
   }
 
   const handleEditar = () => {

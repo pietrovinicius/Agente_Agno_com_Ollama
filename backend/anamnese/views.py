@@ -20,7 +20,41 @@ except ImportError as e:
         # Re-raise the original error if both fail, to see what's wrong
         raise e
 
+from rest_framework import status
+from .models import Anamnese
+from .serializers import AnamneseSerializer
+
 logger = logging.getLogger(__name__)
+
+
+def index(request):
+    """
+    Rota raiz para verificação de status da API.
+    """
+    from django.http import JsonResponse
+    return JsonResponse({
+        "status": "online",
+        "message": "MedAssist AI API v1.0 Rodando",
+        "docs": "/api/",
+        "admin": "/admin/"
+    })
+
+
+@api_view(['POST'])
+async def salvar_anamnese(request):
+    """
+    Salva uma anamnese processada no banco de dados.
+    """
+    try:
+        serializer = AnamneseSerializer(data=request.data)
+        if serializer.is_valid():
+            # Como estamos em um contexto async, precisamos usar sync_to_async para salvar no DB
+            await sync_to_async(serializer.save)()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        logger.error(f"Erro ao salvar anamnese: {str(e)}", exc_info=True)
+        return Response({"erro": "Falha ao salvar anamnese.", "detalhes": str(e)}, status=500)
 
 
 @api_view(['POST'])
