@@ -17,10 +17,11 @@ except ImportError as e:
     try:
         from backend.agents import get_medical_agent
     except ImportError:
-         # Re-raise the original error if both fail, to see what's wrong
+        # Re-raise the original error if both fail, to see what's wrong
         raise e
 
 logger = logging.getLogger(__name__)
+
 
 @api_view(['POST'])
 async def processar_anamnese(request):
@@ -41,7 +42,7 @@ async def processar_anamnese(request):
         # O Agno (Phidata) .run() é síncrono, então usamos sync_to_async
         # para não bloquear o event loop do Django/ASGI.
         run_response = await sync_to_async(agent.run)(texto)
-        
+
         # O resultado estruturado estará em run_response.content (instância do Pydantic)
         resultado = run_response.content
 

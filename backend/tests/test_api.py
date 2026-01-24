@@ -2,7 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
 from unittest.mock import MagicMock, patch
-import json
+
 
 @pytest.mark.django_db
 class TestAnamneseAPI:
@@ -15,28 +15,28 @@ class TestAnamneseAPI:
         # Mocking the agent response
         mock_agent_instance = MagicMock()
         mock_run_response = MagicMock()
-        
+
         # Structure of the expected response from Agno agent
         expected_data = {
             "texto_melhorado": "Paciente relata cefaleia intensa com evolução de 3 dias, associada a fotofobia.",
             "cid_sugerido": "R51",
             "principais_sintomas": ["Cefaleia", "Fotofobia"]
         }
-        
+
         # Mocking Pydantic model dump
         class MockContent:
             def model_dump(self):
                 return expected_data
 
         mock_run_response.content = MockContent()
-        
+
         # The agent.run method returns the response object
         mock_agent_instance.run.return_value = mock_run_response
         mock_get_agent.return_value = mock_agent_instance
 
         # Request data
         payload = {"texto": "dor de cabeça forte há 3 dias e incomodo com a luz"}
-        
+
         # Execute request
         response = self.client.post(self.url, payload, format='json')
 
@@ -49,7 +49,7 @@ class TestAnamneseAPI:
     def test_processar_anamnese_missing_text(self):
         payload = {}
         response = self.client.post(self.url, payload, format='json')
-        
+
         assert response.status_code == 400
         assert "erro" in response.data
 

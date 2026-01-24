@@ -33,3 +33,9 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Dependências**: Arquivo `requirements.txt` completo.
 - **Git**: Configuração de `.gitignore` para Python e Node.js.
 - **Documentação**: Criação de `README.md`, `CHANGELOG.md` e `Anotacoes.txt` com instruções de setup.
+
+### Infraestrutura Local & Correções
+- **Ollama Local**: Instalação manual do binário do Ollama na pasta `tools/` do projeto.
+- **Configuração de Ambiente**: Criação de diretório `ollama_home` para armazenar modelos e dados localmente, contornando restrições de permissão do sistema.
+- **Scripts**: Adicionado `start_ollama.sh` para inicialização automática do servidor Ollama com as variáveis de ambiente corretas.
+- **Qualidade de Código**: Correções de formatação PEP-8 (imports, espaçamento, linhas em branco) em `agents.py`, `views.py` e `settings.py`.

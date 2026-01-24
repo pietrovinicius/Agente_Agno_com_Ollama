@@ -184,3 +184,5 @@ cython_debug/
 node_modules/
 ._*
 .DS_Store
+ollama_home/
+tools/
