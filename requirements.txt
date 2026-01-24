@@ -1,0 +1,10 @@
+django>=5.0
+djangorestframework
+django-cors-headers
+agno
+pydantic
+pytest
+pytest-django
+openai
+ollama
+adrf
