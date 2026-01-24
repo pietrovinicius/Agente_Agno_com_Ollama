@@ -75,6 +75,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 ### Correções e Ajustes (0.1.6)
 - **Correção de Bug**: Aumento do limite de caracteres do campo `cid_sugerido` no banco de dados (20 -> 100) para evitar erros ao salvar respostas mais verbosas da IA.
 - **Refinamento de Prompt**: Ajuste nas instruções do Agente para solicitar códigos CID-10 mais concisos.
+- **Otimização de Inferência**: Ajuste fino dos parâmetros do Ollama (`temperature=0`, `num_ctx=2048`, `top_k=20`) para reduzir o tempo de resposta (target: sub-15s).
 
 ### Performance e Otimização (0.1.5)
 - **Upgrade de Modelo**: Substituição do modelo `llama3.1` (8B) pelo `llama3.2` (3B) no Agente Clínico.
