@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { 
   Activity, 
@@ -29,6 +29,20 @@ function App() {
   const [erro, setErro] = useState('')
   const [toast, setToast] = useState(null)
   const [tempoProcessamento, setTempoProcessamento] = useState(null)
+  const [cronometroAoVivo, setCronometroAoVivo] = useState(0)
+
+  useEffect(() => {
+    let interval
+    if (loading) {
+      const inicio = Date.now()
+      interval = setInterval(() => {
+        setCronometroAoVivo(((Date.now() - inicio) / 1000).toFixed(1))
+      }, 100)
+    } else {
+      setCronometroAoVivo(0)
+    }
+    return () => clearInterval(interval)
+  }, [loading])
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type })
@@ -240,10 +254,14 @@ function App() {
               <div className="p-5 flex-1 flex flex-col relative">
                 {loading && (
                   <div className="absolute inset-0 bg-white/90 backdrop-blur-[2px] z-10 flex flex-col items-center justify-center rounded-b-2xl">
-                    <div className="w-16 h-16 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-4 shadow-lg shadow-blue-500/20"></div>
-                    <p className="text-blue-700 font-medium animate-pulse">Gerando insights clínicos...</p>
-                  </div>
-                )}
+                  <div className="w-16 h-16 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-4 shadow-lg shadow-blue-500/20"></div>
+                  <p className="text-blue-700 font-medium animate-pulse">Gerando insights clínicos...</p>
+                  <p className="text-blue-500 text-sm mt-2 font-mono flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {cronometroAoVivo}s
+                  </p>
+                </div>
+              )}
 
                 {resultado ? (
                   <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-6">
