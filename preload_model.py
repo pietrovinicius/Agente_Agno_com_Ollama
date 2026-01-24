@@ -3,7 +3,7 @@ import time
 import sys
 
 def preload():
-    print("--- Pré-carregando Modelo Llama 3.2:1b ---")
+    print("--- Pré-carregando Modelo Llama 3.2 (3B) ---")
     url = "http://localhost:11434/api/generate"
     payload = {
         "model": "llama3.2",

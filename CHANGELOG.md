@@ -101,18 +101,12 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 ### Otimização de Latência e Estabilidade (0.1.9)
 - **Diagnóstico**: Identificação e correção de "Cold Start" severo do Ollama (latência de 60s+ na primeira chamada).
+    - Comprovado via `debug_latency.py` que a injeção de contexto (`FAQ.MD`) tem impacto desprezível na performance.
 - **Preload**: Implementação de script `preload_model.py` e atualização do `start_ollama.sh` para carregar o modelo na memória durante o boot do servidor.
 - **Configuração do Agente**:
     - Definição explícita de `keep_alive=-1` para impedir que o modelo seja descarregado da memória após inatividade.
     - Redução de `num_ctx` para 1024 tokens e `num_predict` para 512, otimizando o throughput sem perda de qualidade para a tarefa.
     - Reversão estratégica para o modelo `llama3.2` (3B) após testes mostrarem que a versão 1B apresentava alucinações críticas (falha na geração de JSON/CID).
 - **Resultado**: Redução do tempo de resposta "Warm" para ~10-15s (anteriormente >1m em alguns casos).
-
-- **Testes**: Adição de testes unitários (`tests/test_performance_tracking.py`) para validar a persistência da métrica de performance.
-
-### Otimização de Latência (0.1.9)
-- **Correção de Cold Start**: Identificado que a lentidão relatada (~1m) era causada pelo descarregamento automático do modelo da memória pelo Ollama após inatividade.
-    - **Ação**: Configurado parâmetro `"keep_alive": -1` nas opções do Agente.
-    - **Resultado**: O modelo agora permanece carregado na RAM indefinidamente, garantindo tempos de resposta consistentes (~14s) mesmo após pausas longas.
-- **Diagnóstico de Performance**: Criação de script `debug_latency.py` que comprovou que o arquivo `FAQ.MD` (Context Injection) **não** impacta o tempo de inferência (diferença desprezível de <0.01s).
+- **Testes**: Adição de testes unitários (`backend/tests/test_performance_tracking_new.py`) para validar a persistência da métrica de performance.
 
