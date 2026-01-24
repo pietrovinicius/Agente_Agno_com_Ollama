@@ -1,6 +1,21 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { Activity, CheckCircle, ArrowRight, FileText, Copy, Clipboard } from 'lucide-react'
+import { 
+  Activity, 
+  CheckCircle, 
+  FileText, 
+  Copy, 
+  Clipboard, 
+  Stethoscope, 
+  Brain, 
+  LayoutDashboard, 
+  Users, 
+  Calendar, 
+  Settings, 
+  LogOut,
+  Edit,
+  ThumbsUp
+} from 'lucide-react'
 
 function App() {
   const [texto, setTexto] = useState('')
@@ -35,129 +50,236 @@ function App() {
     }
   }
 
-  const handleSalvar = () => {
+  const handleAprovar = () => {
     console.log("Anamnese aprovada e salva:", resultado)
-    showToast('Anamnese confirmada e salva com sucesso!')
+    showToast('Anamnese aprovada e integrada ao prontuário!')
+  }
+
+  const handleEditar = () => {
+    console.log("Editando anamnese:", resultado)
+    showToast('Modo de edição ativado (Simulação)')
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 text-slate-800 font-sans flex overflow-hidden">
       {toast && (
-        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-xl text-white font-medium transition-all transform animate-fade-in-down ${toast.type === 'error' ? 'bg-red-500' : 'bg-teal-600'}`}>
+        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-xl text-white font-medium transition-all transform animate-fade-in-down flex items-center gap-2 ${toast.type === 'error' ? 'bg-red-500' : 'bg-sky-600'}`}>
+          <CheckCircle className="w-5 h-5" />
           {toast.message}
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto">
-        <header className="mb-10 text-center border-b border-slate-200 pb-6">
-          <h1 className="text-3xl font-bold text-teal-700 flex items-center justify-center gap-3 tracking-tight">
-            <Activity className="w-8 h-8" />
-            Medical AI Assistant
-          </h1>
-          <p className="text-slate-500 mt-2 text-sm font-medium uppercase tracking-wider">Análise Clínica Inteligente & Padronização CID-10</p>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Coluna Esquerda: Input */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col h-[calc(100vh-200px)] min-h-[600px]">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-700">
-              <FileText className="w-5 h-5 text-teal-500" />
-              Anamnese Bruta
-            </h2>
-            <textarea
-              className="flex-1 w-full p-4 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none resize-none font-mono text-sm leading-relaxed text-slate-600 bg-slate-50 placeholder-slate-400"
-              placeholder="Digite ou cole as anotações clínicas aqui..."
-              value={texto}
-              onChange={(e) => setTexto(e.target.value)}
-            />
-            <div className="mt-6">
-              <button
-                onClick={handleProcessar}
-                disabled={loading || !texto.trim()}
-                className={`w-full py-3.5 px-4 rounded-lg font-semibold text-white transition-all transform active:scale-[0.99]
-                  ${loading || !texto.trim() 
-                    ? 'bg-slate-300 cursor-not-allowed' 
-                    : 'bg-teal-600 hover:bg-teal-700 shadow-lg hover:shadow-teal-500/30'}`}
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <Activity className="w-5 h-5 animate-spin" />
-                    Processando Análise Clínica...
-                  </span>
-                ) : 'Processar com Inteligência Artificial'}
-              </button>
-              {erro && <p className="text-red-500 text-sm mt-3 text-center bg-red-50 p-2 rounded border border-red-100">{erro}</p>}
-            </div>
+      {/* Sidebar de Navegação */}
+      <aside className="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col h-screen fixed left-0 top-0 border-r border-slate-800">
+        <div className="p-6 border-b border-slate-800 flex items-center gap-3">
+          <div className="bg-sky-600 p-2 rounded-lg">
+            <Activity className="w-6 h-6 text-white" />
           </div>
-
-          {/* Coluna Direita: Resultado */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col h-[calc(100vh-200px)] min-h-[600px]">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-700">
-              <CheckCircle className="w-5 h-5 text-teal-500" />
-              Resultado Clínico Sugerido
-            </h2>
-            
-            {loading ? (
-              <div className="flex-1 flex flex-col gap-4 animate-pulse">
-                <div className="h-24 bg-slate-100 rounded-lg w-full"></div>
-                <div className="flex-1 bg-slate-100 rounded-lg w-full"></div>
-                <div className="h-32 bg-slate-100 rounded-lg w-full"></div>
-              </div>
-            ) : resultado ? (
-              <div className="flex-1 flex flex-col gap-5 overflow-y-auto pr-2 custom-scrollbar">
-                
-                {/* Card CID */}
-                <div className="bg-teal-50 p-5 rounded-lg border border-teal-100 flex items-center justify-between group">
-                  <div>
-                    <h3 className="text-xs font-bold text-teal-800 uppercase tracking-wide mb-1">Diagnóstico Sugerido (CID-10)</h3>
-                    <p className="text-3xl font-mono font-bold text-teal-700">{resultado.cid_sugerido}</p>
-                  </div>
-                  <button onClick={() => handleCopy(resultado.cid_sugerido)} className="p-2 text-teal-600 hover:bg-teal-100 rounded-md transition-colors" title="Copiar CID">
-                    <Copy className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Texto Melhorado */}
-                <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 flex-1 relative group">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide">Redação Técnica</h3>
-                    <button onClick={() => handleCopy(resultado.texto_melhorado)} className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-slate-100 rounded-md transition-colors" title="Copiar Texto">
-                      <Clipboard className="w-4 h-4" />
-                    </button>
-                  </div>
-                  <p className="text-slate-700 whitespace-pre-wrap leading-relaxed text-sm text-justify">{resultado.texto_melhorado}</p>
-                </div>
-
-                {/* Sintomas */}
-                <div className="bg-white p-0 rounded-lg">
-                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Sintomas Identificados</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {resultado.principais_sintomas.map((sintoma, idx) => (
-                      <span key={idx} className="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-md text-xs font-medium border border-slate-200">
-                        {sintoma}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Botão Salvar */}
-                <button
-                  onClick={handleSalvar}
-                  className="mt-auto w-full py-3.5 px-4 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-semibold shadow-md hover:shadow-teal-500/30 transition-all flex items-center justify-center gap-2"
-                >
-                  <CheckCircle className="w-5 h-5" />
-                  Aprovar e Integrar ao Prontuário
-                </button>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-slate-400 border-2 border-dashed border-slate-200 rounded-lg bg-slate-50/50">
-                <Activity className="w-12 h-12 mb-3 text-slate-300" />
-                <p className="text-sm font-medium">Aguardando dados para análise...</p>
-              </div>
-            )}
+          <div>
+            <h1 className="text-white font-bold text-lg tracking-tight">MedAssist AI</h1>
+            <p className="text-xs text-slate-500">Hospital General v2.0</p>
           </div>
         </div>
-      </div>
+        
+        <nav className="flex-1 p-4 space-y-1">
+          <a href="#" className="flex items-center gap-3 px-4 py-3 bg-slate-800 text-white rounded-lg transition-colors">
+            <LayoutDashboard className="w-5 h-5 text-sky-500" />
+            <span className="font-medium">Painel Clínico</span>
+          </a>
+          <a href="#" className="flex items-center gap-3 px-4 py-3 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors text-slate-400">
+            <Users className="w-5 h-5" />
+            <span>Pacientes</span>
+          </a>
+          <a href="#" className="flex items-center gap-3 px-4 py-3 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors text-slate-400">
+            <Calendar className="w-5 h-5" />
+            <span>Agenda</span>
+          </a>
+          <div className="pt-4 mt-4 border-t border-slate-800">
+            <a href="#" className="flex items-center gap-3 px-4 py-3 hover:bg-slate-800/50 hover:text-white rounded-lg transition-colors text-slate-400">
+              <Settings className="w-5 h-5" />
+              <span>Configurações</span>
+            </a>
+          </div>
+        </nav>
+
+        <div className="p-4 border-t border-slate-800">
+          <button className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors w-full px-4 py-2">
+            <LogOut className="w-4 h-4" />
+            <span className="text-sm">Sair do Sistema</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Área Central Principal */}
+      <main className="flex-1 md:ml-64 p-8 h-screen overflow-y-auto">
+        <header className="mb-8 flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <Stethoscope className="w-6 h-6 text-sky-600" />
+              Nova Admissão / Anamnese
+            </h2>
+            <p className="text-slate-500 text-sm mt-1">Preencha os dados clínicos para análise assistida por IA.</p>
+          </div>
+          <div className="flex items-center gap-4">
+             <span className="text-sm text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm flex items-center gap-2">
+               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+               Sistema Online
+             </span>
+             <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center text-sky-700 font-bold border-2 border-white shadow-sm">
+               DR
+             </div>
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 h-[calc(100vh-180px)]">
+          
+          {/* Coluna Esquerda: Registro Clínico */}
+          <section className="flex flex-col gap-6">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-slate-700 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-sky-600" />
+                  Registro Clínico
+                </h3>
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">Entrada Manual</span>
+              </div>
+              
+              <div className="relative flex-1 flex flex-col group">
+                <textarea
+                  className="flex-1 w-full p-5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none resize-none font-sans text-base leading-relaxed text-slate-700 bg-gray-50 placeholder-slate-400 transition-all"
+                  placeholder=" "
+                  value={texto}
+                  onChange={(e) => setTexto(e.target.value)}
+                  id="anamnese-input"
+                />
+                <label 
+                  htmlFor="anamnese-input" 
+                  className={`absolute left-4 transition-all duration-200 pointer-events-none text-slate-400
+                    ${texto ? '-top-2.5 text-xs bg-white px-2 text-sky-600 font-medium' : 'top-5 text-base'}
+                    peer-focus:-top-2.5 peer-focus:text-xs peer-focus:bg-white peer-focus:px-2 peer-focus:text-sky-600 peer-focus:font-medium`}
+                >
+                  {texto ? 'Anamnese do Paciente' : 'Digite a queixa principal, histórico e sinais vitais...'}
+                </label>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={handleProcessar}
+                  disabled={loading || !texto.trim()}
+                  className={`flex items-center gap-2 py-3 px-6 rounded-lg font-semibold text-white transition-all shadow-md
+                    ${loading || !texto.trim() 
+                      ? 'bg-slate-300 cursor-not-allowed shadow-none' 
+                      : 'bg-sky-600 hover:bg-sky-700 hover:shadow-sky-500/25 active:scale-95'}`}
+                >
+                  {loading ? (
+                    <>
+                      <Activity className="w-5 h-5 animate-spin" />
+                      Processando...
+                    </>
+                  ) : (
+                    <>
+                      <Brain className="w-5 h-5" />
+                      Analisar com IA
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* Coluna Direita: Insights de IA */}
+          <section className="flex flex-col h-full">
+            <div className={`bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col relative overflow-hidden transition-all duration-500 ${loading ? 'border-sky-200 ring-4 ring-sky-50/50' : ''}`}>
+              
+              {loading && (
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                  <div className="w-16 h-16 border-4 border-sky-100 border-t-sky-600 rounded-full animate-spin mb-4"></div>
+                  <p className="text-sky-700 font-medium animate-pulse">Gerando insights clínicos...</p>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-slate-700 flex items-center gap-2">
+                  <Brain className="w-5 h-5 text-sky-600" />
+                  Insights de Inteligência Artificial
+                </h3>
+                {resultado && <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-md font-medium">Análise Concluída</span>}
+              </div>
+
+              {resultado ? (
+                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-6">
+                  
+                  {/* Card CID-10 */}
+                  <div className="bg-white rounded-xl border border-slate-100 shadow-sm border-l-4 border-l-sky-500 p-5 hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-xs font-bold text-sky-600 uppercase tracking-wider mb-1 block">Hipótese Diagnóstica (CID-10)</span>
+                        <div className="text-2xl font-bold text-slate-800">{resultado.cid_sugerido}</div>
+                      </div>
+                      <button onClick={() => handleCopy(resultado.cid_sugerido)} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-sky-600 transition-colors">
+                        <Copy className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Card Texto Melhorado */}
+                  <div className="bg-white rounded-xl border border-slate-100 shadow-sm border-l-4 border-l-indigo-500 p-5 hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Evolução Técnica Sugerida</span>
+                      <button onClick={() => handleCopy(resultado.texto_melhorado)} className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-indigo-600 transition-colors">
+                        <Clipboard className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap text-justify bg-slate-50 p-4 rounded-lg border border-slate-100">
+                      {resultado.texto_melhorado}
+                    </p>
+                  </div>
+
+                  {/* Lista de Sintomas */}
+                  <div>
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 block">Sintomas e Sinais Clínicos</span>
+                    <div className="flex flex-wrap gap-2">
+                      {resultado.principais_sintomas.map((sintoma, idx) => (
+                        <span key={idx} className="bg-slate-100 text-slate-600 px-3 py-1.5 rounded-full text-xs font-medium border border-slate-200 flex items-center gap-1">
+                          <Activity className="w-3 h-3 text-slate-400" />
+                          {sintoma}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Ações */}
+                  <div className="pt-6 mt-4 border-t border-slate-100 grid grid-cols-2 gap-4">
+                    <button 
+                      onClick={handleEditar}
+                      className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium text-sky-700 border border-sky-200 hover:bg-sky-50 transition-colors"
+                    >
+                      <Edit className="w-4 h-4" />
+                      Editar Manualmente
+                    </button>
+                    <button 
+                      onClick={handleAprovar}
+                      className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium text-white bg-emerald-500 hover:bg-emerald-600 shadow-sm hover:shadow-emerald-500/20 transition-all"
+                    >
+                      <ThumbsUp className="w-4 h-4" />
+                      Aprovar Sugestão
+                    </button>
+                  </div>
+
+                </div>
+              ) : (
+                <div className="flex-1 flex flex-col items-center justify-center text-slate-400 bg-slate-50/50 rounded-xl border-2 border-dashed border-slate-200 m-4">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                    <Brain className="w-8 h-8 text-slate-300" />
+                  </div>
+                  <p className="font-medium text-slate-500">Aguardando dados clínicos</p>
+                  <p className="text-sm mt-1 max-w-xs text-center">Preencha o registro clínico ao lado para obter sugestões de CID e terminologia técnica.</p>
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   )
 }
