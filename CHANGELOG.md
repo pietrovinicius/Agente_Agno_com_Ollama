@@ -146,3 +146,8 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
     - Aplicação de **Viés de Recência**: Instrução movida para o final do prompt para garantir prioridade.
     - **Imperatividade**: Uso de linguagem mandatória (CAIXA ALTA) para forçar a substituição de termos proibidos.
     - **Correção de Path**: Ajuste na referência `base_dir` em `agents.py` para carregamento correto do `PALAVROES.MD`.
+
+### Qualidade e Gramática (0.3.3)
+- **Correção Gramatical**: Implementação de sistema "Defense in Depth" para correção de alucinações de codificação e acentuação (ex: "regióo", "coraçóo").
+    - **Prompt Engineering**: Instrução explícita para revisão de acentuação (til, cedilha).
+    - **Sanitização de Texto**: Nova utility `sanitize_text` no backend que intercepta e corrige padrões de erro comuns via Regex e Normalização Unicode antes da resposta da API.

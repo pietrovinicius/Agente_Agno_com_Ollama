@@ -52,7 +52,7 @@ def get_medical_agent():
         "ATENÇÃO: Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
         "Analise a anamnese e utilize a 'knowledge_base' para encontrar códigos CID-10 e protocolos.",
         "CAMPO 'cid_sugerido': Retorne o código encontrado na base de conhecimento mais adequado.",
-        "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais.",
+        "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais. ATENÇÃO À ACENTUAÇÃO: Garanta que palavras como 'região', 'coração', 'pulmão' tenham o til (~) correto e não 'óo'.",
         "CAMPO 'principais_sintomas': Liste apenas os sintomas chave.",
         "---------------------------------------------------",
         "FILTRO DE CONTEÚDO OBRIGATÓRIO (CRÍTICO):",

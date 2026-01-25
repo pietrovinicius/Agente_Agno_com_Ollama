@@ -79,6 +79,11 @@ async def processar_anamnese(request):
 
         # O resultado estruturado estará em run_response.content (instância do Pydantic)
         resultado = run_response.content
+        
+        # Higienização de Texto (Gramática e Codificação)
+        from .utils import sanitize_text
+        if hasattr(resultado, 'texto_melhorado'):
+            resultado.texto_melhorado = sanitize_text(resultado.texto_melhorado)
 
         # Retorna os dados serializados
         return Response(resultado.model_dump())
