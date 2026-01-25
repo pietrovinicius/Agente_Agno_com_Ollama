@@ -121,3 +121,14 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
     - Resolução de `TypeError: Knowledge.__init__()` no backend, ajustando a instanciação da base de conhecimento na versão mais recente do framework Agno.
     - Ajuste no caminho do LanceDB para `~/.medical_lancedb` para evitar erros de sistema de arquivos em drives externos (SSD).
 - **Infraestrutura**: Atualização de `requirements.txt` com `lancedb`, `pandas` e `tantivy` para suporte ao novo pipeline de dados.
+
+### Redesign Frontend "Medical Premium" (0.3.0)
+- **Nova Identidade Visual**: Implementação de estética "Premium Medical Authority" com tons Royal Blue e Slate, inspirada em softwares médicos de alta performance.
+- **Tipografia**: Adoção da fonte **Inter** via Google Fonts para máxima legibilidade e modernidade.
+- **Componentes Refinados**:
+    - **Sidebar Glassmorphism**: Navegação lateral com efeito translúcido dark, ícones interativos e melhor hierarquia visual.
+    - **Card "Papel Flutuante"**: Área de anamnese redesenhada como um documento físico flutuante, com barra de ferramentas tátil e sombras suaves.
+    - **Feedback Orgânico**: Substituição de spinners simples por estados de carregamento contextuais e animações suaves (`animate-fade-in`).
+- **UX Improvements**:
+    - **Loading State**: Feedback visual mais rico durante o processamento da IA, com cronômetro integrado e mensagens de status.
+    - **Input Limpo**: Remoção de conflitos de placeholder para uma experiência de digitação sem distrações.
