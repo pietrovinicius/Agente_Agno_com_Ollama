@@ -140,3 +140,9 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 ### Segurança e Governança (0.3.1)
 - **Filtro de Conteúdo**: Implementação de sistema de blocklist (`PALAVROES.MD`) impedindo que o Agente utilize termos inadequados ou grafias chulas.
 - **Instrução de Segurança**: Injeção dinâmica no System Prompt instruindo a IA a substituir termos proibidos por terminologia médica técnica e formal.
+
+### Segurança (Fix 0.3.2)
+- **Refinamento de Prompt**: Correção na instrução de bloqueio de palavras.
+    - Aplicação de **Viés de Recência**: Instrução movida para o final do prompt para garantir prioridade.
+    - **Imperatividade**: Uso de linguagem mandatória (CAIXA ALTA) para forçar a substituição de termos proibidos.
+    - **Correção de Path**: Ajuste na referência `base_dir` em `agents.py` para carregamento correto do `PALAVROES.MD`.

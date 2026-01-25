@@ -35,6 +35,10 @@ def get_medical_agent():
     )
 
     # Carregar lista de palavras proibidas
+    # Define base_dir correctly
+    base_dir = Path(settings.BASE_DIR)
+
+    # Carregar lista de palavras proibidas
     try:
         blocklist_path = base_dir.parent / "PALAVROES.MD"
         with open(blocklist_path, "r", encoding="utf-8") as f:
@@ -47,10 +51,19 @@ def get_medical_agent():
     instructions = [
         "ATENÇÃO: Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
         "Analise a anamnese e utilize a 'knowledge_base' para encontrar códigos CID-10 e protocolos.",
-        f"DIRETRIZ DE SEGURANÇA: JAMAIS utilize as seguintes palavras proibidas: [{blocklist_str}]. Substitua-as por termos técnicos adequados (ex: 'dor genital' em vez de termos chulos).",
         "CAMPO 'cid_sugerido': Retorne o código encontrado na base de conhecimento mais adequado.",
         "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais.",
         "CAMPO 'principais_sintomas': Liste apenas os sintomas chave.",
+        "---------------------------------------------------",
+        "FILTRO DE CONTEÚDO OBRIGATÓRIO (CRÍTICO):",
+        f"Verifique se o texto original contém qualquer uma destas palavras proibidas: [{blocklist_str}].",
+        "SE ENCONTRAR QUALQUER UMA DESSAS PALAVRAS, VOCÊ DEVE SUBSTITUÍ-LA IMEDIATAMENTE POR UM TERMO TÉCNICO.",
+        "Exemplos de substituição obrigatória:",
+        "- 'pénis' ou 'pênis' -> 'região genital' ou 'órgão genital masculino'",
+        "- 'xoxota' -> 'região genital feminina'",
+        "- 'bosta' -> 'fezes'",
+        "JAMAIS repita a palavra proibida no JSON final.",
+        "---------------------------------------------------",
     ]
 
     return Agent(
