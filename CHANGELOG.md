@@ -132,3 +132,11 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **UX Improvements**:
     - **Loading State**: Feedback visual mais rico durante o processamento da IA, com cronômetro integrado e mensagens de status.
     - **Input Limpo**: Remoção de conflitos de placeholder para uma experiência de digitação sem distrações.
+
+### Segurança e Governança (0.3.1)
+- **Filtro de Conteúdo**: Implementação de sistema de blocklist () impedindo que o Agente utilize termos inadequados ou grafias chulas.
+- **Instrução de Segurança**: Injeção dinâmica no System Prompt instruindo a IA a substituir termos proibidos por terminologia médica técnica e formal.
+
+### Segurança e Governança (0.3.1)
+- **Filtro de Conteúdo**: Implementação de sistema de blocklist (`PALAVROES.MD`) impedindo que o Agente utilize termos inadequados ou grafias chulas.
+- **Instrução de Segurança**: Injeção dinâmica no System Prompt instruindo a IA a substituir termos proibidos por terminologia médica técnica e formal.

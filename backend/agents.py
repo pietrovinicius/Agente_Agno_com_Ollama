@@ -34,9 +34,20 @@ def get_medical_agent():
         vector_db=vector_db,
     )
 
+    # Carregar lista de palavras proibidas
+    try:
+        blocklist_path = base_dir.parent / "PALAVROES.MD"
+        with open(blocklist_path, "r", encoding="utf-8") as f:
+            blocklist = [line.strip() for line in f if line.strip()]
+        blocklist_str = ", ".join(blocklist)
+    except Exception as e:
+        print(f"Erro ao carregar blocklist: {e}")
+        blocklist_str = ""
+
     instructions = [
         "ATENÇÃO: Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
         "Analise a anamnese e utilize a 'knowledge_base' para encontrar códigos CID-10 e protocolos.",
+        f"DIRETRIZ DE SEGURANÇA: JAMAIS utilize as seguintes palavras proibidas: [{blocklist_str}]. Substitua-as por termos técnicos adequados (ex: 'dor genital' em vez de termos chulos).",
         "CAMPO 'cid_sugerido': Retorne o código encontrado na base de conhecimento mais adequado.",
         "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais.",
         "CAMPO 'principais_sintomas': Liste apenas os sintomas chave.",
