@@ -5,6 +5,8 @@
 - Node.js & npm
 - Ollama (instalado e rodando)
 
+chmod +x start_ollama.sh && ./start_ollama.sh
+
 ## 2. Configuração do Modelo de IA (Ollama)
 # Certifique-se de que o Ollama está rodando
 ollama serve

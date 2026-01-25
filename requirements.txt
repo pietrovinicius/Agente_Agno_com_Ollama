@@ -9,4 +9,8 @@ openai
 ollama
 adrf
 requests
+lancedb
+pandas
+tantivy
+
 
