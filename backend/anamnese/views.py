@@ -49,7 +49,16 @@ async def salvar_anamnese(request):
         serializer = AnamneseSerializer(data=request.data)
         if serializer.is_valid():
             # Como estamos em um contexto async, precisamos usar sync_to_async para salvar no DB
-            await sync_to_async(serializer.save)()
+            instance = await sync_to_async(serializer.save)()
+            
+            # Continuous Learning: Ingestão Automática no RAG
+            try:
+                from .rag_utils import ingest_anamnese
+                # Executa a ingestão em thread separada para não bloquear
+                await sync_to_async(ingest_anamnese)(instance)
+            except Exception as e:
+                logger.error(f"Falha na ingestão RAG pós-salvamento: {e}")
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:

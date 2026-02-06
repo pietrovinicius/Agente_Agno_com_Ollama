@@ -151,3 +151,11 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Correção Gramatical**: Implementação de sistema "Defense in Depth" para correção de alucinações de codificação e acentuação (ex: "regióo", "coraçóo").
     - **Prompt Engineering**: Instrução explícita para revisão de acentuação (til, cedilha).
     - **Sanitização de Texto**: Nova utility `sanitize_text` no backend que intercepta e corrige padrões de erro comuns via Regex e Normalização Unicode antes da resposta da API.
+
+### Aprendizado Contínuo "Active Learning" (0.4.0)
+- **Ciclo de Evolução Orgânica**: Implementação de sistema onde o Agente "aprende" com as correções do médico.
+    - **Trigger**: Ao aprovar/salvar uma anamnese, o sistema dispara um pipeline de ingestão automática (RAG Loop).
+    - **Ingestão**: Criação de `rag_utils.py` que formata o caso aprovado como um `CASE STUDY` e o insere no banco vetorial LanceDB.
+    - **Recall**: Atualização do Agente para priorizar esses "Case Studies" ao processar novos pacientes, garantindo que o estilo e as correções do médico sejam replicados futuramente.
+- **RAG Refinado**: Migração para imports da biblioteca `agno` (ex-Phidata) garantindo compatibilidade futura.
+- **Dry-Run Verified**: Validação completa do fluxo de conexão e inserção no banco vetorial local.
