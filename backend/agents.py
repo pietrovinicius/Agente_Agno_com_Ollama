@@ -75,6 +75,7 @@ def get_medical_agent():
         model=Ollama(
             id="gemma4:e4b",
             options={
+                "format": "json",
                 "temperature": 0.0,
                 "num_ctx": 2048,     # Aumentado para acomodar contexto do RAG
                 "num_predict": 512,
@@ -86,7 +87,7 @@ def get_medical_agent():
         description="Você é um Assistente Clínico Sênior experiente e meticuloso.",
         instructions=instructions,
         knowledge=knowledge_base,
-        search_knowledge=True, # Enable explicit search
+        search_knowledge=False, # Disable tool-calling search to avoid naming conflicts
         output_schema=AnamneseSchema,
         structured_outputs=True,
     )
