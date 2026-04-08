@@ -3,10 +3,10 @@ import time
 import sys
 
 def preload():
-    print("--- Pré-carregando Modelo Llama 3.2 (3B) ---")
+    print("--- Pré-carregando Modelo Gemma 4 (4B) ---")
     url = "http://localhost:11434/api/generate"
     payload = {
-        "model": "llama3.2",
+        "model": "gemma4:e4b",
         "prompt": "ping",
         "keep_alive": -1, # Garante que fique na memória
         "stream": False

@@ -29,7 +29,7 @@ class Command(BaseCommand):
         
         # Initialize Embedder (Using Ollama)
         # Note: Ensure 'nomic-embed-text' or similar is pulled: `ollama pull nomic-embed-text`
-        # Fallback to llama3.2 if nomic not found (optimization for user)
+        # Fallback to gemma4:e4b if nomic not found (optimization for user)
         embedder = OllamaEmbedder(id="nomic-embed-text", dimensions=768)
         
         # Initialize Vector DB

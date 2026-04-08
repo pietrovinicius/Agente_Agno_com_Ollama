@@ -72,7 +72,7 @@ def get_medical_agent():
 
     return Agent(
         model=Ollama(
-            id="llama3.2",
+            id="gemma4:e4b",
             options={
                 "temperature": 0.0,
                 "num_ctx": 2048,     # Aumentado para acomodar contexto do RAG

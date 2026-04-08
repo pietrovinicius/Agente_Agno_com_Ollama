@@ -149,7 +149,7 @@ function App() {
           </div>
           <div className="relative z-10">
             <h1 className="text-white font-bold text-xl tracking-tight font-display">MedAssist AI</h1>
-            <p className="text-[10px] text-blue-300 font-semibold uppercase tracking-widest mt-0.5">Professional V2.0</p>
+            <p className="text-[10px] text-blue-300 font-semibold uppercase tracking-widest mt-0.5">Professional V2.1.0</p>
           </div>
         </div>
 
