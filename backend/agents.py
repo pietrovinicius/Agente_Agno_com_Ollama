@@ -77,7 +77,7 @@ def get_medical_agent():
         description="Você é um Assistente Clínico Sênior experiente e meticuloso.",
         instructions=instructions,
         knowledge=knowledge_base,
-        add_context=True,       # Injeta documentos do RAG diretamente no prompt
+        add_knowledge_to_context=True,       # Injeta documentos do RAG diretamente no prompt
         search_knowledge=False, # Evita busca tool-based redundante
         output_schema=AnamneseSchema,
         structured_outputs=True,
