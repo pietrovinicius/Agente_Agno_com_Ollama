@@ -21,6 +21,11 @@ except ImportError as e:
         raise e
 
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from .models import Anamnese
 from .serializers import AnamneseSerializer
 
@@ -123,3 +128,73 @@ async def processar_anamnese(request):
     except Exception as e:
         logger.error(f"Erro ao processar anamnese: {str(e)}", exc_info=True)
         return Response({"erro": "Falha ao processar com IA.", "detalhes": str(e)}, status=500)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+async def register_view(request):
+    """
+    Cria um novo usuário e retorna o token de acesso.
+    """
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+        name = request.data.get('name')
+
+        if not username or not password:
+            return Response({"erro": "Usuário e senha são obrigatórios."}, status=400)
+
+        # Verifica se usuário já existe
+        user_exists = await sync_to_async(User.objects.filter(username=username).exists)()
+        if user_exists:
+            return Response({"erro": "Este nome de usuário já está sendo utilizado."}, status=400)
+
+        # Cria o usuário
+        user = await sync_to_async(User.objects.create_user)(
+            username=username,
+            password=password,
+            first_name=name or ""
+        )
+
+        # Gera o token
+        token, _ = await sync_to_async(Token.objects.get_or_create)(user=user)
+
+        return Response({
+            "token": token.key,
+            "username": user.username,
+            "name": user.first_name
+        }, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        logger.error(f"Erro no cadastro: {str(e)}")
+        return Response({"erro": "Falha ao criar conta."}, status=500)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+async def login_view(request):
+    """
+    Autentica o usuário e retorna o token de acesso.
+    """
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return Response({"erro": "Informe usuário e senha."}, status=400)
+
+        user = await sync_to_async(authenticate)(username=username, password=password)
+
+        if user is not None:
+            token, _ = await sync_to_async(Token.objects.get_or_create)(user=user)
+            return Response({
+                "token": token.key,
+                "username": user.username,
+                "name": user.first_name
+            })
+        
+        return Response({"erro": "Credenciais inválidas."}, status=401)
+
+    except Exception as e:
+        logger.error(f"Erro no login: {str(e)}")
+        return Response({"erro": "Falha na autenticação."}, status=500)

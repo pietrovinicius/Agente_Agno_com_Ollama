@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
     # Local
@@ -125,10 +126,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 # CORS Settings
 CORS_ALLOW_ALL_ORIGINS = True  # For MVP simplicity
