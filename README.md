@@ -1,88 +1,82 @@
-# Assistente de Anamnese Médica com IA (Agno + Ollama)
+# Assistente de Anamnese Médica : Médico Clinical AI (Agno + Ollama)
 
-Este projeto é um MVP (Minimum Viable Product) de uma aplicação de auxílio médico que utiliza Inteligência Artificial Generativa para processar e estruturar anamneses brutas.
+Este projeto é um Assistente de Missão Crítica para emergências hospitalares que utiliza Inteligência Artificial Generativa para processar, higienizar e estruturar anamneses brutas através de uma arquitetura **RAG (Retrieval-Augmented Generation)**.
 
 ## 🚀 Sobre o Projeto
 
-A aplicação permite que médicos digitem anotações rápidas e desestruturadas (anamnese bruta) e recebam instantaneamente uma versão técnica, polida e estruturada, incluindo sugestões de códigos CID-10 e lista de principais sintomas.
+O sistema permite que médicos convertam anotações rápidas em documentos clínicos estruturados, garantindo conformidade com terminologias técnicas, sugestão automática de **CID-10** e extração de sintomas chave.
 
-O sistema utiliza o framework **Agno** para orquestração de agentes de IA e roda totalmente local com **Ollama** e o modelo **Llama 3.1**, garantindo privacidade e velocidade.
+A arquitetura opera sob o paradigma **Zero-G (Zero-Latency / Zero-Hallucination)**, utilizando uma base de conhecimento local alimentada por estudos de caso validados (Case Studies).
 
-### ✨ Funcionalidades
-- **Processamento de Linguagem Natural**: Transforma texto informal em terminologia médica técnica.
-- **Sugestão de CID-10**: Identifica e sugere o código CID mais apropriado para o caso relatado.
-- **Extração de Sintomas**: Lista os principais sintomas identificados no relato.
-- **Interface Intuitiva**: Visualização "Antes e Depois" para fácil comparação e validação.
-- **Arquitetura Assíncrona**: Backend otimizado para não bloquear durante a inferência da IA.
+### ✨ Diferenciais Técnicos
+- **Privacidade Absoluta (LGPD/HIPAA)**: Processamento 100% local via Ollama.
+- **RAG Avançado**: Uso de LanceDB para busca vetorial semântica de protocolos e CIDs.
+- **Higienização Inteligente**: Filtro automático de termos inadequados para terminologia técnica.
+- **Resiliência de Schema**: Validação Pydantic estrita com tratamento de falhas em tempo real (HTTP 422).
 
-## 🛠️ Stack Tecnológica
+## 🛠️ Stack Tecnológica de Elite
 
 ### Backend
-- **Linguagem**: Python 3.12+
-- **Framework Web**: Django 5.x
-- **API**: Django Rest Framework (DRF) + `adrf` (Async Support)
-- **Orquestração de IA**: Agno
-- **Validação de Dados**: Pydantic
-- **Testes**: Pytest + Pytest-Django
+- **Core**: Python 3.12+ | Django 5.x (Assíncrono via `adrf`)
+- **Orquestração de Agentes**: [Agno](https://agno.com/) (ex-Phidata)
+- **Base Vetorial (RAG)**: LanceDB
+- **Embeddings**: `nomic-embed-text` (768d)
+- **Validação**: Pydantic v2
 
 ### Frontend
-- **Library**: React
+- **Library**: React 19 (Vercel Best Practices)
+- **Styling**: Tailwind CSS (Royal Blue / Slate Theme)
 - **Build Tool**: Vite
-- **Estilização**: Tailwind CSS
-- **Cliente HTTP**: Axios
 
-### IA & Infraestrutura
-- **LLM Engine**: Ollama (Local)
-- **Modelo**: Llama 3.1
+### IA Local (Infra)
+- **Engine**: Ollama
+- **LLM Principal**: `gemma4:e4b` (Google Gemma 2 optimized)
+- **Protocolo**: Ollama REST API
 
 ## 📋 Pré-requisitos
 
-- Python 3.12 ou superior
-- Node.js e npm
-- [Ollama](https://ollama.com/) instalado
+- Python 3.12+
+- Node.js 20+
+- [Ollama](https://ollama.com/) instalado e rodando.
 
-## ⚡ Como Executar
+## ⚡ Como Executar (Protocolo Sênior)
 
-Para instruções detalhadas com todos os comandos, consulte o arquivo [Anotacoes.txt](./Anotacoes.txt).
-
-### Resumo Rápido:
-
-1.  **Prepare a IA**:
-    ```bash
-    ollama serve
-    ollama pull llama3.1
-    ```
-
-2.  **Inicie o Backend**:
-    ```bash
-    # Na raiz do projeto
-    python3.12 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    cd backend
-    python manage.py migrate
-    python manage.py runserver
-    ```
-
-3.  **Inicie o Frontend**:
-    ```bash
-    # Em outro terminal, na pasta frontend
-    cd frontend
-    npm install
-    npm run dev
-    ```
-
-4.  **Acesse**:
-    Abra `http://localhost:5173` no seu navegador.
-
-## 🧪 Testes
-
-O projeto possui testes unitários para garantir a integridade da API.
+### 1. Preparação dos Modelos (IA)
 ```bash
-# No diretório backend, com venv ativado:
-pytest
+# Baixar o modelo de inferência e os embeddings
+ollama pull gemma4:e4b
+ollama pull nomic-embed-text
 ```
 
-## 📝 Licença
+### 2. Ambiente Backend
+```bash
+# Na raiz do projeto
+python3.12 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cd backend
+python manage.py migrate
+python manage.py runserver
+```
 
-Este projeto foi desenvolvido para fins educacionais e de demonstração.
+### 3. Ambiente Frontend
+```bash
+# terminal separado, na pasta frontend
+cd frontend
+npm install
+npm run dev
+```
+
+## 📝 Governança e Release
+
+Este projeto segue o padrão **Conventional Commits** e utiliza **Changelog Fragments** para rastreabilidade de iterações de IA. Veja a pasta `/changelog` para o histórico completo.
+
+## 🛡️ Segurança Clínica
+
+O sistema implementa:
+- Sanitização de texto via `Regex` e `Blocklist`.
+- Proteção contra IDOR e injeção de prompt no nível da View.
+- Auditoria de logs de inferência para rastreamento de alucinações.
+
+---
+**MedAssist AI** - Desenvolvido sob padrões de arquitetura de alta performance.
