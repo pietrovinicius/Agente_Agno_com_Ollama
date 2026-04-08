@@ -146,8 +146,8 @@ function Dashboard() {
             <Activity className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-white font-bold text-xl tracking-tight">MedAssist AI</h1>
-            <p className="text-[10px] text-blue-300 font-semibold uppercase tracking-widest mt-0.5">Professional V0.6.0</p>
+            <h1 className="text-white font-bold text-xl tracking-tight">Lucas MD IA</h1>
+            <p className="text-[10px] text-blue-300 font-semibold uppercase tracking-widest mt-0.5">Professional V0.6.1</p>
           </div>
         </div>
 

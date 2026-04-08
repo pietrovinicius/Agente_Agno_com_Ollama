@@ -47,7 +47,7 @@ const LoginPage = () => {
           <div className="inline-flex p-4 bg-blue-600 rounded-2xl shadow-xl shadow-blue-500/20 mb-6">
             <Activity className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">MedAssist AI</h1>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Lucas MD IA</h1>
           <p className="text-slate-500 font-medium tracking-wide uppercase text-[10px] tracking-[0.2em]">Medical Intelligence System</p>
         </div>
 

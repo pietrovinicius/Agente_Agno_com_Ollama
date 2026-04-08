@@ -39,7 +39,7 @@ def index(request):
     from django.http import JsonResponse
     return JsonResponse({
         "status": "online",
-        "message": "MedAssist AI API v1.0 Rodando",
+        "message": "Lucas MD IA API v1.0 Rodando",
         "docs": "/api/",
         "admin": "/admin/"
     })

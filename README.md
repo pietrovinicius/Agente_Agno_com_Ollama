@@ -1,4 +1,4 @@
-# Assistente de Anamnese Médica : Médico Clinical AI (Agno + Ollama)
+# Lucas MD IA : Assistente de Anamnese Médica (Agno + Ollama)
 
 Este projeto é um Assistente de Missão Crítica para emergências hospitalares que utiliza Inteligência Artificial Generativa para processar, higienizar e estruturar anamneses brutas através de uma arquitetura **RAG (Retrieval-Augmented Generation)**.
 
@@ -79,4 +79,4 @@ O sistema implementa:
 - Auditoria de logs de inferência para rastreamento de alucinações.
 
 ---
-**MedAssist AI** - Desenvolvido sob padrões de arquitetura de alta performance.
+**Lucas MD IA** - Desenvolvido sob padrões de arquitetura de alta performance.
