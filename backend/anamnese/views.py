@@ -40,6 +40,21 @@ def index(request):
     })
 
 
+@api_view(['GET'])
+async def listar_anamneses(request):
+    """
+    Retorna a lista de anamneses salvas, ordenadas das mais recentes.
+    """
+    try:
+        # Recupera todas as anamneses ordenadas por data descendente
+        queryset = await sync_to_async(lambda: list(Anamnese.objects.all().order_by('-created_at')))()
+        serializer = AnamneseSerializer(queryset, many=True)
+        return Response(serializer.data)
+    except Exception as e:
+        logger.error(f"Erro ao listar anamneses: {str(e)}", exc_info=True)
+        return Response({"erro": "Falha ao recuperar histórico.", "detalhes": str(e)}, status=500)
+
+
 @api_view(['POST'])
 async def salvar_anamnese(request):
     """
