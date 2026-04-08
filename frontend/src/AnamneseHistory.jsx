@@ -9,11 +9,13 @@ import {
   FileText, 
   AlertCircle 
 } from 'lucide-react';
+import AnamneseDetailModal from './AnamneseDetailModal';
 
 const AnamneseHistory = () => {
   const [historico, setHistorico] = useState([]);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState(null);
+  const [selectedAnamnese, setSelectedAnamnese] = useState(null);
 
   useEffect(() => {
     fetchHistorico();
@@ -71,7 +73,15 @@ const AnamneseHistory = () => {
   }
 
   return (
-    <div className="flex-1 p-0 flex flex-col animate-fade-in">
+    <div className="flex-1 p-0 flex flex-col animate-fade-in relative">
+      {/* Modal de Detalhes */}
+      {selectedAnamnese && (
+        <AnamneseDetailModal 
+          anamnese={selectedAnamnese} 
+          onClose={() => setSelectedAnamnese(null)} 
+        />
+      )}
+
       <header className="mb-8">
         <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
           <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
@@ -95,7 +105,8 @@ const AnamneseHistory = () => {
           {historico.map((item) => (
             <div 
               key={item.id} 
-              className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-blue-900/5 transition-all group relative overflow-hidden"
+              onClick={() => setSelectedAnamnese(item)}
+              className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-blue-900/5 transition-all group relative overflow-hidden cursor-pointer active:scale-[0.99]"
             >
               <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500 transform scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300"></div>
               
@@ -128,7 +139,13 @@ const AnamneseHistory = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button className="p-3 bg-slate-50 text-slate-400 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedAnamnese(item);
+                    }}
+                    className="p-3 bg-slate-50 text-slate-400 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm group-hover:rotate-90 hover:scale-110 active:scale-95"
+                  >
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
