@@ -2,6 +2,28 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
+## [0.5.0] - 2026-04-08
+
+### Adicionado
+- **Migração para Gemma 4:e4b**: Substituição do motor de inferência `llama3.2` pelo `gemma4:e4b` da Google, otimizando o raciocínio clínico e adesão a protocolos M4.
+- **Tela de Histórico de Anamneses**: Nova interface premium (`AnamneseHistory.jsx`) com cards detalhados e badges de CID-10 para revisão de atendimentos passados.
+- **Navegação Sidebar**: Integração de controle de estado no `App.jsx` para alternar entre os módulos de "Nova Admissão" e "Histórico".
+- **Modal de Detalhes (UX Pro Max)**: Implementação do `AnamneseDetailModal.jsx` com visualização dual (Relato Original vs Documento Estruturado) e suporte a Glassmorphism.
+- **Backend - Listagem**: Novo endpoint GET `/api/historico/` com suporte a `adrf` para recuperação assíncrona de dados ordenados.
+- **Infraestrutura de Embeddings**: Adição do modelo `nomic-embed-text` para suporte ao pipeline de busca semântica do RAG.
+
+### Corrigido
+- **Estabilização de Contexto RAG**: Janela de contexto aumentada para 4096 tokens e correção do parâmetro de injeção (`add_knowledge_to_context`) conforme Agno v2.5.14.
+- **Mapeamento de Ingestão Active Learning**: Resolvido erro de mapeamento em `rag_utils.py`, garantindo que anamneses aprovadas alimentem a base vetorial corretamente.
+- **Resiliência de API**: Implementada validação de tipo e tratamento de erro HTTP 422 para garantir estabilidade quando o LLM falha no contrato JSON.
+- **Performance RAG**: Otimização de prompts para evitar tool-calling indesejado e ativação do modo JSON nativo no Ollama.
+
+### Documentação e DevOps
+- **README.md**: Reescrita completa da documentação técnica para refletir a nova arquitetura e stack tecnológica.
+- **Preload**: Atualização dos scripts de boot para garantir o carregamento do modelo Gemma 4 em memória (Cold Start protection).
+
+
+
 ## [0.1.0] - 2026-01-23
 
 ### Adicionado
