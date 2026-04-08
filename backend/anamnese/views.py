@@ -94,7 +94,14 @@ async def processar_anamnese(request):
         if hasattr(resultado, 'texto_melhorado'):
             resultado.texto_melhorado = sanitize_text(resultado.texto_melhorado)
 
-        # Retorna os dados serializados
+        # Retorna os dados serializados (Validação Robusta v2)
+        if isinstance(resultado, str):
+            logger.error(f"Falha de Schema LLM: O modelo retornou texto puro em vez de JSON estruturado. Conteúdo: {resultado}")
+            return Response({
+                "erro": "O motor de IA falhou em seguir o contrato de dados estruturados.",
+                "conteudo_bruto": resultado
+            }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
         return Response(resultado.model_dump())
 
     except Exception as e:

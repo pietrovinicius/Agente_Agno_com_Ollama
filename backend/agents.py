@@ -49,7 +49,8 @@ def get_medical_agent():
         blocklist_str = ""
 
     instructions = [
-        "ATENÇÃO: Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
+        "ATENÇÃO: Você DEVE retornar APENAS um JSON válido. Não inclua blocos de código markdown (```json) ou texto antes/depois.",
+        "Você é um assistente JSON estrito. Responda APENAS no formato solicitado.",
         "Analise a anamnese e utilize a 'knowledge_base' para encontrar códigos CID-10 e protocolos.",
         "CAMPO 'cid_sugerido': Retorne o código encontrado na base de conhecimento mais adequado.",
         "CAMPO 'texto_melhorado': Reescreva usando termos médicos formais. ATENÇÃO À ACENTUAÇÃO: Garanta que palavras como 'região', 'coração', 'pulmão' tenham o til (~) correto e não 'óo'.",
