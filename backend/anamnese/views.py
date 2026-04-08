@@ -96,7 +96,8 @@ async def processar_anamnese(request):
 
         # Retorna os dados serializados (Validação Robusta v2)
         if isinstance(resultado, str):
-            logger.error(f"Falha de Schema LLM: O modelo retornou texto puro em vez de JSON estruturado. Conteúdo: {resultado}")
+            logger.error(f"Falha de Schema LLM: O modelo retornou texto puro em vez de JSON estruturado.")
+            logger.error(f"CONTEÚDO BRUTO RECEBIDO: {resultado!r}")
             return Response({
                 "erro": "O motor de IA falhou em seguir o contrato de dados estruturados.",
                 "conteudo_bruto": resultado
