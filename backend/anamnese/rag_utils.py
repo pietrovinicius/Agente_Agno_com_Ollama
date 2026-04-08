@@ -33,7 +33,7 @@ def format_anamnese_for_rag(anamnese_data: Dict[str, Any]) -> str:
     Formata os dados da anamnese em um texto estruturado para o vetor DB.
     """
     cid = anamnese_data.get('cid_sugerido', 'N/A')
-    texto_original = anamnese_data.get('queixa_original', '')
+    texto_original = anamnese_data.get('texto_original', '')
     texto_melhorado = anamnese_data.get('texto_melhorado', '')
     sintomas = ", ".join(anamnese_data.get('principais_sintomas', []))
     
@@ -59,19 +59,28 @@ def ingest_anamnese(anamnese_obj) -> bool:
         start_time = time.time()
         logger.info(f"Iniciando ingestão vetorial para Anamnese ID: {getattr(anamnese_obj, 'id', 'N/A')}")
 
-        # Extrair dados.
-        if hasattr(anamnese_obj, 'conteudo_processado') and anamnese_obj.conteudo_processado:
-            processed_data = anamnese_obj.conteudo_processado
-        else:
-            logger.warning("Anamnese sem conteudo_processado. Pulando ingestão.")
+        # Extrair dados do objeto Django (Model instance)
+        # Se for um dicionário (mock), tenta .get(), se for objeto tenta getattr
+        def get_val(obj, attr, default=None):
+            if isinstance(obj, dict):
+                return obj.get(attr, default)
+            return getattr(obj, attr, default)
+
+        cid = get_val(anamnese_obj, 'cid_sugerido')
+        texto_melhorado = get_val(anamnese_obj, 'texto_melhorado')
+        texto_original = get_val(anamnese_obj, 'texto_original')
+        principais_sintomas = get_val(anamnese_obj, 'principais_sintomas', [])
+
+        if not cid or not texto_melhorado:
+            logger.warning(f"Anamnese {getattr(anamnese_obj, 'id', 'N/A')} com dados incompletos. Pulando ingestão.")
             return False
 
         # Prepara o conteúdo
         rag_content = format_anamnese_for_rag({
-            'cid_sugerido': processed_data.get('cid_sugerido'),
-            'principais_sintomas': processed_data.get('principais_sintomas'),
-            'texto_melhorado': processed_data.get('texto_melhorado'),
-            'queixa_original': getattr(anamnese_obj, 'texto_original', '')
+            'cid_sugerido': cid,
+            'principais_sintomas': principais_sintomas,
+            'texto_melhorado': texto_melhorado,
+            'texto_original': texto_original
         })
 
         # Cria Documento Agno
@@ -81,7 +90,7 @@ def ingest_anamnese(anamnese_obj) -> bool:
                 "source": "user_feedback",
                 "type": "case_study",
                 "anamnese_id": str(getattr(anamnese_obj, 'id', 'unknown')),
-                "cid": processed_data.get('cid_sugerido'),
+                "cid": cid,
                 "timestamp": str(time.time())
             }
         )
@@ -92,7 +101,7 @@ def ingest_anamnese(anamnese_obj) -> bool:
         knowledge_base.vector_db.upsert(documents=[document])
 
         elapsed = time.time() - start_time
-        logger.info(f"Ingestão RAG concluída com sucesso em {elapsed:.2f}s. CID: {processed_data.get('cid_sugerido')}")
+        logger.info(f"Ingestão RAG concluída com sucesso em {elapsed:.2f}s. CID: {cid}")
         return True
 
     except Exception as e:
